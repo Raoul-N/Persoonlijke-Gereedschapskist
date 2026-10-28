@@ -4,11 +4,96 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Munt Gewicht Calculator</title>
 <style>
-:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#183153;background:#f4f7fb}*{box-sizing:border-box}body{margin:0}.hero{background:linear-gradient(120deg,#183653,#315c89);color:white;padding:26px max(22px,calc((100vw - 1400px)/2))}.hero h1{margin:0 0 8px;font-size:clamp(24px,3vw,34px)}.hero p{margin:0;color:#e2ecf8}.wrap{max-width:1400px;margin:24px auto;padding:0 20px 30px;display:grid;grid-template-columns:minmax(300px, .85fr) minmax(400px,1.4fr);gap:18px}.panel{background:#fff;border:1px solid #dbe5f1;border-radius:14px;padding:20px;box-shadow:0 3px 14px #193b5b0a}.panel h2{font-size:19px;margin:0 0 10px}.sub{color:#60748d;font-size:14px;line-height:1.5;margin:0 0 14px}textarea{width:100%;min-height:300px;resize:vertical;border:1px solid #c7d7e9;border-radius:9px;padding:14px;font:13px/1.55 Consolas,monospace;color:#243e5d;outline-color:#438ce0}button{border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;font-size:15px}.primary{width:100%;background:#347fda;color:#fff;margin-top:13px}.secondary{background:#eaf2fc;color:#23558b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.hint{font-size:12px;line-height:1.55;color:#667d98;background:#f3f7fc;padding:12px;border-radius:8px;margin-top:12px}.results{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 22px}.price-control{margin:14px 0 0;padding:13px;background:#f8fafc;border:1px solid #dbe5f1;border-radius:9px}.price-control label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.price-control input{width:100%;padding:10px;border:1px solid #c7d7e9;border-radius:7px;font:inherit;color:#183153}.price-control p{font-size:12px;color:#667d98;margin:7px 0 0;line-height:1.45}.metric{border-radius:10px;padding:17px 12px;text-align:center;border:1px solid}.metric small{display:block;font-weight:650;font-size:13px;margin-bottom:12px}.metric strong{display:block;font-size:clamp(20px,2.3vw,30px);letter-spacing:-.5px}.metric span{display:block;font-size:12px;margin-top:8px;opacity:.8}.blue{background:#eff6ff;border-color:#b8d7ff;color:#205eaa}.green{background:#eaf8f1;border-color:#a8dfc6;color:#087963}.purple{background:#f4efff;border-color:#d2c1ff;color:#5031a1}.gold{background:#fff7e6;border-color:#f0d28a;color:#8a5a00}.tablewrap{overflow:auto;border:1px solid #dbe5f1;border-radius:9px}table{width:100%;border-collapse:collapse;font-size:13px;min-width:650px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #e3ebf4}th{background:#f2f6fb;color:#405b7c;font-weight:700}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}tfoot td{font-weight:750;background:#f7f9fc}.section-title{margin:0 0 12px;font-size:17px}.errors{margin-top:15px;padding:12px;border-radius:8px;background:#fff7e8;border:1px solid #f2d69b;color:#81520a;font-size:13px;line-height:1.5}.errors ul{margin:6px 0 0;padding-left:20px}.empty{padding:22px;text-align:center;color:#72859c;background:#f8fafc;border-radius:8px;font-size:14px}.footer{font-size:12px;color:#6a7d94;margin-top:14px;line-height:1.5}.hidden{display:none!important}@media(max-width:1100px){.results{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:900px){.wrap{grid-template-columns:1fr}.results{grid-template-columns:1fr}.metric{padding:14px}.metric small{margin-bottom:6px}.metric strong{font-size:27px}}
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#183153;background:#f4f7fb}
+*{box-sizing:border-box}
+body{margin:0}
+
+.hero{
+    background:linear-gradient(120deg,#183653,#315c89);
+    color:white;
+    padding:26px max(22px,calc((100vw - 1400px)/2))
+}
+.hero-top{max-width:1100px;margin:auto}
+.back{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:#e2ecf8;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:650;
+    margin-bottom:18px
+}
+.back:hover{color:#fff;text-decoration:underline}
+.eyebrow{
+    margin:0 0 8px;
+    color:#bcd5f0;
+    font-size:12px;
+    font-weight:750;
+    letter-spacing:1.5px;
+    text-transform:uppercase
+}
+.hero h1{margin:0 0 8px;font-size:clamp(24px,3vw,34px)}
+.hero p{margin:0;color:#e2ecf8}
+
+/* De rest van de bestaande styling */
+.wrap{max-width:1400px;margin:24px auto;padding:0 20px 30px;display:grid;grid-template-columns:minmax(300px, .85fr) minmax(400px,1.4fr);gap:18px}
+.panel{background:#fff;border:1px solid #dbe5f1;border-radius:14px;padding:20px;box-shadow:0 3px 14px #193b5b0a}
+.panel h2{font-size:19px;margin:0 0 10px}
+.sub{color:#60748d;font-size:14px;line-height:1.5;margin:0 0 14px}
+textarea{width:100%;min-height:300px;resize:vertical;border:1px solid #c7d7e9;border-radius:9px;padding:14px;font:13px/1.55 Consolas,monospace;color:#243e5d;outline-color:#438ce0}
+button{border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;font-size:15px}
+.primary{width:100%;background:#347fda;color:#fff;margin-top:13px}
+.secondary{background:#eaf2fc;color:#23558b}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.hint{font-size:12px;line-height:1.55;color:#667d98;background:#f3f7fc;padding:12px;border-radius:8px;margin-top:12px}
+.results{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 22px}
+.price-control{margin:14px 0 0;padding:13px;background:#f8fafc;border:1px solid #dbe5f1;border-radius:9px}
+.price-control label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+.price-control input{width:100%;padding:10px;border:1px solid #c7d7e9;border-radius:7px;font:inherit;color:#183153}
+.price-control p{font-size:12px;color:#667d98;margin:7px 0 0;line-height:1.45}
+.metric{border-radius:10px;padding:17px 12px;text-align:center;border:1px solid}
+.metric small{display:block;font-weight:650;font-size:13px;margin-bottom:12px}
+.metric strong{display:block;font-size:clamp(20px,2.3vw,30px);letter-spacing:-.5px}
+.metric span{display:block;font-size:12px;margin-top:8px;opacity:.8}
+.blue{background:#eff6ff;border-color:#b8d7ff;color:#205eaa}
+.green{background:#eaf8f1;border-color:#a8dfc6;color:#087963}
+.purple{background:#f4efff;border-color:#d2c1ff;color:#5031a1}
+.gold{background:#fff7e6;border-color:#f0d28a;color:#8a5a00}
+.tablewrap{overflow:auto;border:1px solid #dbe5f1;border-radius:9px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:650px}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #e3ebf4}
+th{background:#f2f6fb;color:#405b7c;font-weight:700}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:750;background:#f7f9fc}
+.section-title{margin:0 0 12px;font-size:17px}
+.errors{margin-top:15px;padding:12px;border-radius:8px;background:#fff7e8;border:1px solid #f2d69b;color:#81520a;font-size:13px;line-height:1.5}
+.errors ul{margin:6px 0 0;padding-left:20px}
+.empty{padding:22px;text-align:center;color:#72859c;background:#f8fafc;border-radius:8px;font-size:14px}
+.footer{font-size:12px;color:#6a7d94;margin-top:14px;line-height:1.5}
+.hidden{display:none!important}
+
+@media(max-width:1100px){
+    .results{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px){
+    .wrap{grid-template-columns:1fr}
+    .results{grid-template-columns:1fr}
+    .metric{padding:14px}
+    .metric small{margin-bottom:6px}
+    .metric strong{font-size:27px}
+}
 </style>
 </head>
 <body>
-<header class="hero"><div class="hero-top"><a class="back" href="index.html">← Terug naar Muntenhulpmiddelen</a><p class="eyebrow">Muntenhulpmiddelen</p><h1>Munt Gewicht Calculator</h1><p>Plak je muntenlijst en bereken bruto gewicht, netto metaalgewicht en gemiddeld metaalgehalte.</p></div></header>
+<header class="hero">
+    <div class="hero-top">
+        <a class="back" href="index.html">← Terug naar Muntenhulpmiddelen</a>
+        <p class="eyebrow">Muntenhulpmiddelen</p>
+        <h1>Munt Gewicht Calculator</h1>
+        <p>Plak je muntenlijst en bereken bruto gewicht, netto metaalgewicht en gemiddeld metaalgehalte.</p>
+    </div>
+</header>
 <main class="wrap">
 <section class="panel"><h2>1. Plak je muntenlijst</h2><p class="sub">Plak de regels zoals je ze nu al noteert. De app verwerkt aantallen, gewichten en metaalgehaltes automatisch.</p>
 <textarea id="input" spellcheck="false" aria-label="Muntenlijst invoeren" placeholder='Bijvoorbeeld:\n2x 1967 - Nederland - 10 Gulden - "Wilhelmina" - 15,0 gram - Zilver: 720/1000\n1x 1980 - Voorbeeldland - 100 Units - 8 gram - Goud: 999/1000'></textarea>
