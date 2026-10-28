@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Munt Gewicht Calculator</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#183153;background:#f4f7fb}*{box-sizing:border-box}body{margin:0}.hero{background:linear-gradient(120deg,#183653,#315c89);color:white;padding:26px max(22px,calc((100vw - 1400px)/2))}.hero h1{margin:0 0 8px;font-size:clamp(24px,3vw,34px)}.hero p{margin:0;color:#e2ecf8}.wrap{max-width:1400px;margin:24px auto;padding:0 20px 30px;display:grid;grid-template-columns:minmax(300px, .85fr) minmax(400px,1.4fr);gap:18px}.panel{background:#fff;border:1px solid #dbe5f1;border-radius:14px;padding:20px;box-shadow:0 3px 14px #193b5b0a}.panel h2{font-size:19px;margin:0 0 10px}.sub{color:#60748d;font-size:14px;line-height:1.5;margin:0 0 14px}textarea{width:100%;min-height:300px;resize:vertical;border:1px solid #c7d7e9;border-radius:9px;padding:14px;font:13px/1.55 Consolas,monospace;color:#243e5d;outline-color:#438ce0}button{border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;font-size:15px}.primary{width:100%;background:#347fda;color:#fff;margin-top:13px}.secondary{background:#eaf2fc;color:#23558b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.hint{font-size:12px;line-height:1.55;color:#667d98;background:#f3f7fc;padding:12px;border-radius:8px;margin-top:12px}.results{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 22px}.price-control{margin:14px 0 0;padding:13px;background:#f8fafc;border:1px solid #dbe5f1;border-radius:9px}.price-control label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.price-control input{width:100%;padding:10px;border:1px solid #c7d7e9;border-radius:7px;font:inherit;color:#183153}.price-control p{font-size:12px;color:#667d98;margin:7px 0 0;line-height:1.45}.metric{border-radius:10px;padding:17px 12px;text-align:center;border:1px solid}.metric small{display:block;font-weight:650;font-size:13px;margin-bottom:12px}.metric strong{display:block;font-size:clamp(20px,2.3vw,30px);letter-spacing:-.5px}.metric span{display:block;font-size:12px;margin-top:8px;opacity:.8}.blue{background:#eff6ff;border-color:#b8d7ff;color:#205eaa}.green{background:#eaf8f1;border-color:#a8dfc6;color:#087963}.purple{background:#f4efff;border-color:#d2c1ff;color:#5031a1}.gold{background:#fff7e6;border-color:#f0d28a;color:#8a5a00}.tablewrap{overflow:auto;border:1px solid #dbe5f1;border-radius:9px}table{width:100%;border-collapse:collapse;font-size:13px;min-width:650px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #e3ebf4}th{background:#f2f6fb;color:#405b7c;font-weight:700}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}tfoot td{font-weight:750;background:#f7f9fc}.section-title{margin:0 0 12px;font-size:17px}.errors{margin-top:15px;padding:12px;border-radius:8px;background:#fff7e8;border:1px solid #f2d69b;color:#81520a;font-size:13px;line-height:1.5}.errors ul{margin:6px 0 0;padding-left:20px}.empty{padding:22px;text-align:center;color:#72859c;background:#f8fafc;border-radius:8px;font-size:14px}.footer{font-size:12px;color:#6a7d94;margin-top:14px;line-height:1.5}.hidden{display:none!important}@media(max-width:1100px){.results{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:900px){.wrap{grid-template-columns:1fr}.results{grid-template-columns:1fr}.metric{padding:14px}.metric small{margin-bottom:6px}.metric strong{font-size:27px}}
+</style>
+</head>
+<body>
+<header class="hero"><h1>◉ Munt Gewicht Calculator</h1><p>Plak je muntenlijst en bereken bruto gewicht, netto metaalgewicht en gemiddeld metaalgehalte.</p></header>
+<main class="wrap">
+<section class="panel"><h2>1. Plak je muntenlijst</h2><p class="sub">Plak de regels zoals je ze nu al noteert. De app verwerkt aantallen, gewichten en metaalgehaltes automatisch.</p>
+<textarea id="input" spellcheck="false" aria-label="Muntenlijst invoeren" placeholder='Bijvoorbeeld:\n2x 1967 - Nederland - 10 Gulden - "Wilhelmina" - 15,0 gram - Zilver: 720/1000\n1x 1980 - Voorbeeldland - 100 Units - 8 gram - Goud: 999/1000'></textarea>
+<div class="hint"><b>Ondersteunde invoer</b><br>• Gewicht in gram (bijv. 15,0 gram of 31.1 g)<br>• Metaalgehalte als breuk (900/1000), percentage (90%) of decimaal (0,900)<br>• Elk metaal: zilver, goud, koper, nikkel enzovoort<br>• Regels zonder herkenbaar gewicht of gehalte worden gemeld ter controle.</div>
+<button class="primary" id="calculate">▦ &nbsp; Bereken gewichten</button>
+<div class="actions"><button class="secondary" id="example">Voorbeeld invullen</button><button class="secondary" id="clear">Wissen</button></div>
+<p class="footer">De berekening gebeurt lokaal in deze browser. De app slaat je invoer niet op.</p></section>
+<section class="panel"><h2>2. Resultaat</h2><div id="empty" class="empty">Plak links je muntenlijst en klik op <b>Bereken gewichten</b>.</div>
+<div id="output" class="hidden"><div class="price-control"><label for="pricePerGram">Metaalprijs per gram (€)</label><input id="pricePerGram" inputmode="decimal" type="text" placeholder="Bijvoorbeeld: 1,5" value=""><p>Vul 1,5 in voor € 1.500 per kilo. De metaalwaarde wordt berekend als netto metaalgewicht in gram × deze prijs. De waarde wordt automatisch bijgewerkt.</p></div><div class="results"><div class="metric blue"><small>Totaal brutogewicht</small><strong id="gross">—</strong><span id="count">Alle munten samen</span></div><div class="metric green"><small>Totaal netto metaalgewicht</small><strong id="net">—</strong><span>Puur metaal volgens opgegeven gehalte</span></div><div class="metric purple"><small>Gemiddeld metaalgehalte</small><strong id="average">—</strong><span>Rekenkundig gemiddelde</span></div><div class="metric gold"><small>Geschatte metaalwaarde</small><strong id="metalValue">—</strong><span id="priceNote">Vul een prijs per gram in</span></div></div>
+<h3 class="section-title">Overzicht per regel</h3><div class="tablewrap"><table><thead><tr><th>#</th><th>Jaar</th><th>Land</th><th>Munt / omschrijving</th><th>Metaal</th><th class="num">Aantal</th><th class="num">Bruto totaal (g)</th><th class="num">Gehalte</th><th class="num">Netto (g)</th></tr></thead><tbody id="rows"></tbody><tfoot id="foot"></tfoot></table></div>
+<div id="errors" class="errors hidden"></div><div class="actions"><button class="secondary" id="copy">Kopieer samenvatting</button></div><p class="footer">Netto metaalgewicht = bruto gewicht × metaalgehalte. Het gemiddelde gehalte is het rekenkundig gemiddelde van de gehaltes per munt, waarbij aantallen meetellen.</p></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const example='1x 1973 - Bulgarije - 5 Leva - "Olympic Congress" - 29,95 gram - Zilver: 900/1000 - Proof\n1x 1974 - Bulgarije - 5 Leva - "Alexander Stamboliiski" - 20,5 gram - Zilver: 900/1000 - Proof\n1x 1976 - Bulgarije - 5 Leva - "Khristo Botev" - 20,5 gram - Zilver: 900/1000 - Proof\n1x 1989 - Bulgarije - 25 Leva - "16th Winter Olympic Games" - 23,55 gram - Zilver: 925/1000 - Proof';
+const fmt=(n,d=2)=>n.toLocaleString('nl-NL',{minimumFractionDigits:d,maximumFractionDigits:d});
+function updateMetalValue(){const raw=$('pricePerGram').value.trim().replace(/\s/g,'').replace(',','.');const price=raw===''?NaN:Number(raw);const netText=$('net').textContent.replace(/\./g,'').replace(',','.').replace(/\s*g$/,'');const net=Number(netText);if(raw!==''&&Number.isFinite(price)&&price>=0&&Number.isFinite(net)){$('metalValue').textContent=new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR'}).format(net*price);$('priceNote').textContent='Bij € '+fmt(price,4)+' per gram';}else{$('metalValue').textContent='—';$('priceNote').textContent=raw===''?'Vul een prijs per gram in':'Voer een geldig bedrag in';}}
+function parseLine(line,index){
+ let s=line.trim();if(!s)return {skip:true};
+ let count=1,m=s.match(/^\s*(\d+)\s*[x×]\s*/i);if(m){count=Number(m[1]);s=s.slice(m[0].length)}
+ let weightMatch=[...s.matchAll(/(\d+(?:[.,]\d+)?)\s*(?:gram|grams|gr\.?|g)\b/ig)].pop();
+ if(!weightMatch)return {error:`Regel ${index}: geen gewicht in gram gevonden.`};
+ const weight=Number(weightMatch[1].replace(',','.'));if(!Number.isFinite(weight)||weight<0)return {error:`Regel ${index}: ongeldig gewicht.`};
+ let metal='Metaal', purity=null;
+ // Prefer a purity attached to a named metal, e.g. Zilver: 900/1000 or Goud 90%.
+ const metalRe=/(zilver|silver|goud|gold|koper|copper|nikkel|nickel|platina|platinum|palladium|brons|bronze|electrum|metaal)\s*:?\s*(\d+(?:[.,]\d+)?\s*\/\s*\d+(?:[.,]\d+)?|\d+(?:[.,]\d+)?\s*%|\d+(?:[.,]\d+)?)/i;
+ let mm=s.match(metalRe);
+ if(mm){metal=mm[1][0].toUpperCase()+mm[1].slice(1).toLowerCase();let p=mm[2].replace(/\s/g,'').replace(',','.');if(p.includes('/')){let [a,b]=p.split('/').map(Number);if(b>0)purity=a/b;}else if(p.endsWith('%'))purity=Number(p.slice(0,-1))/100;else {let v=Number(p);purity=v>1? v/1000 : v;}}
+ else {
+   // fallback: accept a standalone fineness near a metal keyword or as final fraction
+   const fm=s.match(/(\d+(?:[.,]\d+)?\s*\/\s*1000|\d+(?:[.,]\d+)?\s*%)/);
+   if(fm){let p=fm[1].replace(/\s/g,'').replace(',','.');purity=p.includes('/')?Number(p.split('/')[0])/Number(p.split('/')[1]):Number(p.slice(0,-1))/100;}
+ }
+ if(purity===null||!Number.isFinite(purity)||purity<0||purity>1)return {error:`Regel ${index}: geen geldig metaalgehalte gevonden (bijv. Zilver: 900/1000 of Goud: 99,9%).`};
+ // Split on hyphens; the first segments are often year, country, denomination, theme.
+ const parts=s.split(/\s+-\s+/).map(x=>x.trim()).filter(Boolean);
+ const year=(parts[0]||'').match(/\b(\d{3,4})\b/);const yearText=year?year[1]:'—';
+ let metalIdx=parts.findIndex(p=>/(zilver|silver|goud|gold|koper|copper|nikkel|nickel|platina|platinum|palladium|brons|bronze|electrum|metaal)\s*:?/i.test(p));
+ let descParts=metalIdx>=0?parts.slice(1,metalIdx):parts.slice(1);
+ // remove count/year and weight/metal details from description when the line is not hyphen-separated consistently
+ let country=descParts[0]||'—';let coin=descParts.slice(1).join(' – ').trim()||'—';
+ return {count,weight,purity,metal,year:yearText,country,coin,line:index};
+}
+function calculate(){const lines=$('input').value.split(/\r?\n/);let data=[],errors=[];lines.forEach((line,i)=>{let r=parseLine(line,i+1);if(r.skip)return;if(r.error)errors.push(r.error);else data.push(r)});
+ if(!data.length){$('empty').classList.remove('hidden');$('output').classList.add('hidden');if(errors.length){$('empty').innerHTML='Geen geldige regels gevonden. Controleer de invoer hieronder.';$('output').classList.remove('hidden');$('results').style.display='none';$('rows').innerHTML='';$('foot').innerHTML='';showErrors(errors)}return}
+ const gross=data.reduce((a,r)=>a+r.weight*r.count,0),net=data.reduce((a,r)=>a+r.weight*r.count*r.purity,0),qty=data.reduce((a,r)=>a+r.count,0),averagePurityCounted=data.reduce((a,r)=>a+r.purity*r.count,0)/qty;
+ $('empty').classList.add('hidden');$('output').classList.remove('hidden');document.querySelector('.results').style.display='grid';
+ $('gross').textContent=fmt(gross)+' g';$('net').textContent=fmt(net)+' g';$('average').textContent=(qty?fmt(averagePurityCounted*100)+'%':'—');$('count').textContent=qty+' munt'+(qty===1?'':'en')+' in '+data.length+' geldige regel'+(data.length===1?'':'s');
+ $('rows').innerHTML=data.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.year)}</td><td>${esc(r.country)}</td><td>${esc(r.coin)}</td><td>${esc(r.metal)}</td><td class="num">${r.count}</td><td class="num">${fmt(r.weight*r.count)}</td><td class="num">${fmt(r.purity*100,3).replace(/,?0+$/,'')}%</td><td class="num">${fmt(r.weight*r.count*r.purity,4)}</td></tr>`).join('');
+ $('foot').innerHTML=`<tr><td colspan="5">Totaal</td><td class="num">${qty}</td><td class="num">${fmt(gross)}</td><td class="num">${fmt(averagePurityCounted*100)}%</td><td class="num">${fmt(net,4)}</td></tr>`;
+ showErrors(errors);updateMetalValue();
+}
+function showErrors(errors){const el=$('errors');if(!errors.length){el.classList.add('hidden');el.innerHTML='';return}el.classList.remove('hidden');el.innerHTML='<b>Controleer deze regels</b><ul>'+errors.map(e=>'<li>'+esc(e)+'</li>').join('')+'</ul>'}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('pricePerGram').addEventListener('input',updateMetalValue);$('calculate').addEventListener('click',calculate);$('example').addEventListener('click',()=>{$('input').value=example;calculate()});$('clear').addEventListener('click',()=>{$('input').value='';$('pricePerGram').value='';$('metalValue').textContent='—';$('priceNote').textContent='Vul een prijs per gram in';$('output').classList.add('hidden');$('empty').classList.remove('hidden');$('empty').textContent='Plak links je muntenlijst en klik op Bereken gewichten.'});
+$('copy').addEventListener('click',async()=>{const text=`Totaal brutogewicht: ${$('gross').textContent}\nTotaal netto metaalgewicht: ${$('net').textContent}\nGemiddeld metaalgehalte: ${$('average').textContent}\nGeschatte metaalwaarde: ${$('metalValue').textContent}\n${$('count').textContent}`;try{await navigator.clipboard.writeText(text);$('copy').textContent='Gekopieerd!';setTimeout(()=>$('copy').textContent='Kopieer samenvatting',1600)}catch(e){window.prompt('Kopieer de samenvatting:',text)}});
+</script></body></html>
